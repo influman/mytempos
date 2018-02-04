@@ -1,0 +1,95 @@
+{
+	"plugin_id": "mytempos",
+	"name_fr": "Mes temporisations",
+	"icon": "tempo.png",
+	"version": "1.0",
+	"creation_date": "2017-10-06",
+	"modification_date": "2017-10-06",
+	"author": "Influman",
+	"description_fr": "Permet de gérer des temporisations. <BR>En option, extinction automatique d’un périphérique lampe",
+	"description_en": "",
+	"description_es": "",
+	"description_it": "",
+	"description_de": "",
+	"forum_link": "http://forum.eedomus.com/viewtopic.php?f=50&t=5965",
+	"parameters":
+  [
+		{
+			"parameter": "TEMPO", 
+			"description": "Numéro de temporisation",
+			"xtype": "combo",
+			"default_value": "1",
+			"field": "width:40, allowBlank:false, store:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20], editable: false, shadow: true, triggerAction: 'all', typeAhead:true"
+		},
+		{
+			"parameter": "DELAI", 
+			"description": "Durée de temporisation (Minutes)",
+			"xtype": "numberfield",
+			"default_value": "1",
+			"field": "minValue:1, allowDecimals:false, width:40"
+    },
+		{
+			"parameter": "device_api",
+      "description": "Périphérique à éteindre (Optionnel)",
+      "xtype": "combo",
+			"field": "store : getCombo('/json/list_all.php?actuator_only=1&value_type=list&has_value=0'), displayField: 'label', valueField: 'id', typeAhead: true, forceSelection: true, triggerAction: 'all', selectOnFocus: true, editable: false, shadow:true, mode: 'local', width: 250, listWidth: 300, allowBlank: true"
+    }
+ ],
+	"scripts":
+	[
+		{
+			"name": "mytempo.php"
+		}
+	],
+	"devices":
+  [
+		{
+			"device_id": "temporisateur",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "Temporisateur plugin.parameters.TEMPO (plugin.parameters.DELAI)",
+			"icon": "tempo.png",
+			"utilisation_id": "35",
+			"value_unit": "min.",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.TEMPO",
+				"VAR2": "plugin.parameters.DELAI",
+				"VAR3": "plugin.parameters.device_api",
+				"value_type": "float",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=mytempo.php&action=xml&tempo=[VAR1]&periphId=[VAR3]",
+				"RAW_XPATH": "/TEMPOS/TEMPO[VAR1]",
+				"POLLING": "1"
+			}
+    },
+{
+			"device_id": "tempoinit",
+			"parent_id": "temporisateur",
+			"module_id": "41",
+			"type": "http",
+			"name_fr": "Temporisateur plugin.parameters.TEMPO Initialisation (plugin.parameters.DELAI)",
+			"icon": "tempo.png",
+			"utilisation_id": "43",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.TEMPO",
+				"VAR2": "plugin.parameters.DELAI",
+				"VAR3": "plugin.parameters.device_api",
+				"value_type": "list",
+				"ignore_errors": 3,
+				"RAW_URL": "",
+				"RAW_XPATH": "",
+				"POLLING": "1"
+			},
+			"values":
+			[
+				{ "value": "0", "description": "Réinitialiser", "icon": "tempoinit.png", "http_url": "http://localhost/script/?exec=mytempo.php", "http_type": "GET",  "http_params": "&action=init&tempo=[VAR1]&delai=[VAR2]" },
+				{ "value": "1", "description": "Annuler", "icon": "tempostop.png", "http_url": "http://localhost/script/?exec=mytempo.php", "http_type": "GET",  "http_params": "&action=stop&tempo=[VAR1]" }
+			]
+    }
+  ]
+}
+
+
+
