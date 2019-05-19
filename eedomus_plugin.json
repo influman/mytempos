@@ -2,11 +2,11 @@
 	"plugin_id": "mytempos",
 	"name_fr": "Mes temporisations",
 	"icon": "tempo.png",
-	"version": "1.0",
+	"version": "1.1",
 	"creation_date": "2017-10-06",
-	"modification_date": "2017-10-06",
+	"modification_date": "2019-05-05",
 	"author": "Influman",
-	"description_fr": "Permet de gérer des temporisations. <BR>En option, extinction automatique d’un périphérique lampe",
+	"description_fr": "Permet de gérer des temporisations. <BR>En option, extinction automatique d'un périphérique",
 	"description_en": "",
 	"description_es": "",
 	"description_it": "",
@@ -26,8 +26,8 @@
 			"description": "Durée de temporisation (Minutes)",
 			"xtype": "numberfield",
 			"default_value": "1",
-			"field": "minValue:1, allowDecimals:false, width:40"
-    },
+			"field": "minValue:1, allowDecimals:false, width:100"
+        },
 		{
 			"parameter": "device_api",
       "description": "Périphérique à éteindre (Optionnel)",
